@@ -1,0 +1,32 @@
+﻿@using CloudinaryDotNet
+@using Microsoft.AspNet.Identity
+@{
+        SocialMediaDBQuerys dbQuerys = new SocialMediaDBQuerys();
+        CreateCloudinary c = new CreateCloudinary();
+
+    var notificatons = dbQuerys.GetNotificationListItems(User.Identity.GetUserId());
+    int numOfNotification = notificatons.Count();
+}
+
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Notifications  <span class="badge">@numOfNotification</span><span class="caret"></span></a>
+<ul class="dropdown-menu">
+
+
+    @foreach (var notification in notificatons)
+    {
+        <li class="dropdown-list-item" >
+            <div class="notification-image">
+                @c.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(100).Width(100).Crop("scale")).BuildImageTag(notification.User.DisplayPicture)
+            </div>
+            <div class="notification-Text">
+                <h4><a href="/profile/user/@notification.User.Slug">@notification.User.Forename @notification.User.Surname</a></h4>
+                <h5>wants to be your friend</h5>
+            </div>
+            <div class="notification-btns">
+                <input type="button" class="btn btn-success" onclick="acceptFriend(@notification.FriendRowId)" value="Accept">
+                <input type="button" class="btn btn-danger" onclick="deleteFriend(@notification.FriendRowId)" value="decline">
+            </div>
+        </li>
+    }
+
+</ul>

@@ -1,0 +1,61 @@
+﻿@using CloudinaryDotNet
+@using Microsoft.AspNet.Identity
+@model List<SocialNetwork.Models.FriendsChatListItemModel>
+
+
+@{
+    CreateCloudinary c = new CreateCloudinary();
+    var _dbQuerys = new SocialMediaDBQuerys();
+    var yourID = User.Identity.GetUserId();
+}
+
+<ul class="list-group search-list">
+    @foreach (var user in Model)
+    {
+        var friendStatus = _dbQuerys.FriendStatus(user.UserId, yourID);
+        
+        var firstOrDefault = _dbQuerys.DbContext.Users.FirstOrDefault(x => x.UserId == user.UserId);
+        string slug = "";
+        if (firstOrDefault != null)
+        {
+            slug = firstOrDefault.Slug;
+        }
+
+        <li class="list-group-item search-item" href="/Profile/User/@slug">
+            <div class="display-search">@c.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(100).Width(100).Crop("scale")).BuildImageTag(user.DisplayPicture)</div>
+            <div class="search-content">
+                <h4 class="list-group-item-heading"><a href="/Profile/User/@slug">@user.Name</a></h4>
+
+                
+                @{
+                    if (friendStatus == 2) //2 = registered friend in DB
+                    {
+                        <p class="list-group-item-text">
+                            <input type="button" class="btn btn-warning" onclick="deleteFriend('@user.UserId')" value="Delete Friend">
+                        </p>
+                    }
+                    else if (friendStatus == 1) //1 = pending friend request
+                    {
+                        if (_dbQuerys.WhoSentFriendrequest(yourID, user.UserId).Equals(yourID))
+                        {
+                            <h2>Pending Friend you sent</h2>
+                        }
+                        else
+                        {
+                            <h2>Pending Friend they sent</h2>
+                        }
+                    }
+                    else //0 = no record in DB
+                    {
+                        <p class="list-group-item-text">
+                            <input type="button" class="btn btn-success" onclick="addFriend('@user.UserId')" value="Add as Friend"></p>
+                    }
+                }
+
+
+            </div>
+        </li>
+    }
+</ul>
+
+

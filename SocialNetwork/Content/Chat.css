@@ -1,0 +1,246 @@
+﻿html, body {
+    height: 100%;
+}
+
+.container {
+    height: 100%;
+    overflow: hidden;
+}
+
+.panel-body, .panel-heading {
+    padding: 0;
+}
+
+
+
+.chatContainer {
+    position: relative;
+    flex-flow: column;
+    height: 100%;
+    width: 100%;
+}
+
+.panel-group .panel {
+    -ms-border-radius: 0;
+    border-radius: 0;
+    border: 0;
+}
+
+.panel-group {
+    border-bottom: 1px solid black;
+    margin: 0;
+}
+
+    .panel-group:last-child {
+        border: 0;
+    }
+
+.list-group-item.active {
+    border: 0;
+}
+
+.list-group {
+    margin: 0;
+}
+
+.list-group-item {
+    border: 0;
+    text-align: center;
+    border-bottom: 2px solid #dddddd;
+}
+
+    .list-group-item:last-child {
+        -ms-border-radius: 0;
+        border-radius: 0;
+        border-bottom: 0;
+    }
+
+    .list-group-item:last-child {
+        -ms-border-radius: 0;
+        border-radius: 0;
+    }
+
+    .list-group-item:first-child {
+        border-radius: 0;
+    }
+
+.friendsList {
+    height: 100%;
+    width: 30%;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid #dddddd;
+}
+
+
+
+.openChat {
+    height: 100%;
+    width: 70%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatArea {
+    flex: 1;
+    border: 1px solid #dddddd;
+    padding: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatInput {
+    height: 150px;
+    background-color: pink;
+    display: flex;
+    flex-direction: row;
+}
+
+.friendIDs {
+    position: relative;
+}
+
+.onlineState {
+    height: 30px;
+    width: 30px;
+    z-index: 3;
+    position: absolute;
+    right: 5px;
+    top: calc(50% - 15px);
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    background-color: orangered;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+.messageTextarea {
+    flex: 1;
+    -moz-resize: none;
+    -ms-resize: none;
+    -o-resize: none;
+    resize: none;
+    padding: 10px;
+}
+
+.messageBtn {
+    width: 100px;
+}
+
+.My-Bubble {
+    width: 65%;
+    padding: 5px;
+    border-radius: 10px;
+    padding-right: 15px;
+    background: #7db4ff;
+    float: right;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.Their-Bubble {
+    width: 65%;
+    padding: 5px;
+    border-radius: 10px;
+    padding-left: 15px;
+    background: lightgrey;
+    margin-bottom: 5px;
+    float: left;
+}
+
+
+.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+
+.messageSpan {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+.timeSpan {
+    margin-top: 10px;
+    font-size: 0.7em;
+}
+
+.chatHeader {
+    height: 100px;
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid black;
+}
+
+.messageList {
+    flex: 1;
+    overflow: auto;
+    padding-top: 10px;
+}
+
+.profile-img-chat {
+    position: absolute;
+    top: calc(50% - 25px);
+    left: 20px;
+    font-size: 1.5em;
+}
+
+.chat-Name {
+    position: absolute;
+    top: calc(50% - 10px);
+    left: 45%;
+    font-size: 1.5em;
+}
+
+@media(max-width: 767px) {
+
+
+    .onlineState {
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-radius: 0;
+        -ms-border-radius: 0;
+        background-color: orangered;
+        opacity: 0.3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        padding-left: 80%;
+    }
+
+
+    .chatInput {
+            height: 100px;
+    }
+
+    .messageBtn {
+        width: 75px;
+    }
+
+
+    .nameSpan {
+        font-size: 0.8em;
+    }
+
+    .messageSpan {
+        font-size: 0.9em;
+    }
+
+
+    .chatHeader {
+        height: 75px;
+        font-size: 0.7em;
+    }
+}

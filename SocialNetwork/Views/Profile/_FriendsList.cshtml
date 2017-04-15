@@ -1,0 +1,62 @@
+﻿@using CloudinaryDotNet
+@model SocialNetwork.Models.FriendsPartialModel
+@{
+    SocialMediaDBQuerys dbQuerys = new SocialMediaDBQuerys();
+    int page = Model.Page;
+
+    var friends = dbQuerys.GetFriendsListItems(Model.UserId as string, page);
+
+    int totalFriends = dbQuerys.NumberOfFriends(Model.UserId as string);
+
+    int totalpages = (int) Math.Ceiling((totalFriends/ 5.0));
+
+    CreateCloudinary c = new CreateCloudinary();
+}
+<div class="friends-list-contents">
+    @{
+        foreach (var f in friends)
+        {
+            var firstOrDefault = dbQuerys.DbContext.Users.FirstOrDefault(x => x.UserId == f.UserId);
+            string slug = "";
+            if (firstOrDefault != null)
+            {
+                slug = firstOrDefault.Slug;
+            }
+            <div class="FriendItem" onclick="gotouser('@slug')">
+                <div class="FriendItem-image">
+                    @c.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(75).Width(75).Crop("scale")).BuildImageTag(f.DisplayPicture)
+                </div>
+                <div class="FriendItem-name">
+                    <h3>@f.Name</h3>
+                </div>
+
+            </div>
+        }
+    }
+</div>
+<div class="friends-footer">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm">
+            @if (page > 0)
+            {
+                <li>
+                    <a onclick="nextPage(@page-1)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            <li>
+                <a>@(page+1)</a>
+            </li>
+            @if (totalFriends > 5 && (page+1) != totalpages)
+            {
+
+                <li>
+                    <a onclick="nextPage(@page+1)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            } 
+        </ul>
+    </nav>
+</div>

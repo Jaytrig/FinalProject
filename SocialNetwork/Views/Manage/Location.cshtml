@@ -1,0 +1,38 @@
+﻿
+@using (Html.BeginForm("Location", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row row-padding-top">
+        <input class="form-control col-xs-12" name="location" id="location"/>
+    </div>
+    <div class="row row-padding-top">
+        <div id="map" class="col-xs-12" style="height: 500px"></div>
+    </div>
+    <div class="row row-padding-top">
+        <input id="Search" type="button" class="btn btn-default col-xs-12 col-sm-6" value="Search"/>
+        <input type="submit" id="save" class="btn btn-success col-xs-12 col-sm-6" value="Save"/>
+    </div>
+}
+
+
+
+
+@section scripts{
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDKPOBrFsE46I34A6LbNfMxADrVuQjz7jY"></script>
+    <script src="~/Scripts/jquery.geocomplete.min.js"></script>
+    <script>
+
+        $(function () {
+
+            var options = {
+                map: "#map",
+                types: ['(cities)']
+            };
+
+            $("#location").geocomplete(options);
+            $("#Search").change(function () {
+                $('#location').trigger("geocode");
+            });
+        });
+    </script>
+}

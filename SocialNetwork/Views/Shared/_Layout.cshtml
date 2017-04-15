@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>@ViewBag.Title - SM</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("stylesheet", false)
+    <meta name="description" content="The description of my page" />
+</head>
+<body>
+    <input type="hidden" id="userid" value="@User.Identity.GetUserId()" />
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Social Media", "Index", "Home", new { }, new { @class = "navbar-brand" })
+                
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/Moment.js"></script>
+    <script src="~/Scripts/moment-timezone.js"></script>
+    <script src="https://use.fontawesome.com/3453b49aa4.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+    <script>
+        function acceptFriend(row) {
+            console.log(row);
+            $.ajax({
+                type: 'Post',
+                url: '/profile/AcceptFriend',
+                data: {
+                    rowId: row
+                },
+                success: function (data, textstatus) {
+                    console.log('Request Sent!');
+                    location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+        function deleteFriend(row) {
+            $.ajax({
+                type: 'Post',
+                url: '/profile/RemoveFriendbyRow',
+                data: {
+                    rowId: row
+                },
+                success: function (data, textstatus) {
+                    console.log('Request Sent!');
+                    location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+    </script>
+</body>
+</html>

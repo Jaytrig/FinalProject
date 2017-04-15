@@ -1,0 +1,47 @@
+﻿.dropdown-list-item {
+    height: 150px;
+    width: 350px;
+    border-bottom: solid 1px grey;
+    /*display: flex;
+    align-items: center;*/
+    /*justify-content: center;*/
+    position: relative;
+}
+
+.dropdown-menu {
+    padding: 0 0;
+}
+
+
+li.dropdown-list-item:last-child {
+    border-bottom: none;
+}
+
+.notification-image {
+    height: 100px; 
+    width: 100px;
+    overflow: hidden;
+
+    position: absolute;
+    left: 15px;
+    top: 25px; 
+}
+
+.notification-btns {
+    position: absolute;
+    left: 145px;
+    bottom: 25px;
+}
+
+.notification-btns > .btn {
+    width: 84px;
+}
+
+.notification-Text {
+    width: 220px;
+    text-align: center;
+    position: absolute;
+    left: 120px;
+    top: 10px;
+
+}

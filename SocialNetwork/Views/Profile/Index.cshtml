@@ -1,0 +1,223 @@
+﻿@using System.Web.Mvc.Html
+@using CloudinaryDotNet
+@using Microsoft.AspNet.Identity
+@using SocialNetwork.Database
+@using CloudinaryDotNet.Actions;
+@using SocialNetwork.Models
+
+@model User
+
+@{
+    ViewBag.title = Model.Forename + ' ' + Model.Surname;
+    var theirID = @Model.UserId;
+    var yourID = User.Identity.GetUserId();
+
+    var _dbQuerys = new SocialMediaDBQuerys();
+    var friendStatus = _dbQuerys.FriendStatus(theirID, yourID);
+    var c = new CreateCloudinary();
+}
+
+<div class="info-section">
+    <div id="map" class="top-with-background"></div>
+    <div class="profile-img">
+        @c.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(200).Width(200).Crop("scale")).BuildImageTag(Model.DisplayPicture)
+    </div>
+
+    <div class="information">
+        <div class="about-info">
+
+            @if (Model.Location != "")
+            {
+                <h4>@(Model.Location)</h4>
+            }
+            else
+            {
+                <h4>
+                    No location set
+                </h4>
+            }
+            <h4>
+                @Model.BrithDate.ToString().Split(' ')[0]
+            </h4>
+        </div>
+        <div class="name">
+            <h2>@Model.Forename @Model.Surname</h2>
+            <div class="button-section">
+                @{
+                    if (friendStatus == 2) //2 = registered friend in DB
+                    {
+                        <button class="btn btn-danger" id="DeleteFriend">Remove As Friend</button>
+                    }
+                    else if (friendStatus == 1) //1 = pending friend request
+                    {
+                        @*if (_dbQuerys.WhoSentFriendrequest(yourID, theirID).Equals(yourID))
+                            {
+                                <h2>Pending</h2>
+                            }
+                            else
+                            {
+                                <h2>Pending</h2>
+                            }*@
+                        <h2>Pending</h2>
+                    }
+                    else if (Model.UserId == User.Identity.GetUserId())
+                    {
+                        <h2>Your profile</h2>
+                    }
+                    else //0 = no record in DB
+                    {
+                        <button class="btn btn-success" id="AddAsFriend">Add As Friend</button>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<ul class="nav nav-tabs nav-justified tabs">
+    <li class="active"><a data-toggle="tab" href="#posts">Posts</a></li>
+    <li><a data-toggle="tab" href="#friends">friends</a></li>
+</ul>
+
+<div class="tab-content">
+
+    <div id="friends" class="tab-pane fade friends-list">
+        <div class="friends-title">
+            <h5>@Model.Forename's Friends</h5>
+        </div>
+        <div id="PartialFriends">
+            @Html.Partial("_FriendsList", new FriendsPartialModel() {Page = 0, UserId = Model.UserId})
+        </div>
+    </div>
+
+    <div id="posts" class="tab-pane fade in active">
+        @{
+            if (Model.UserId == User.Identity.GetUserId())
+            {
+                @Html.Partial("../Profile/_inputPost")
+            }
+
+        }
+
+        <div class="posts">
+            @{
+                if (ViewBag.Posts != null)
+                {
+                    <div class="col-xs-12 infinite-scroll">
+                        @Html.Partial("_Posts", (ViewBag.Posts as Post[]))
+                    </div>
+                }
+            }
+        </div>
+        <div id="loading" class="col-xs-12 text-center" style="display: none;">Loading...</div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm in" id="delete-Post-Model" role="dialog" tabindex="-1" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="mySmallModalLabel">Delete Post?</h4>
+                <input type="hidden" id="postToDelete" value="" />
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this post, this can not be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="DeletePostModelBtn" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUJuxDsx2LnopALEVujcWK_WNrmNZ51N4&callback=initMap"
+            async defer></script>
+    <script>
+        var map;
+        var geocoder;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 51.507351, lng: -0.127758 },
+                zoom: 2
+            });
+            codeAddress();
+        }
+
+        function codeAddress() {
+            var address = '@Model.Location';
+            geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == 'OK') {
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: results[0].geometry.location,
+                        zoom: 8
+                    });
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        var TheirId = '@theirID';
+        $(function() {
+            $('#AddAsFriend').click(function() {
+                $.ajax({
+                    type: 'Post',
+                    url: '/profile/AddFriend',
+                    data: "theirId=" + TheirId,
+                    success: function(data, textstatus) {
+                        console.log('Request Sent!');
+                        location.reload();
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            });
+
+            $('#DeleteFriend').click(function() {
+                $.ajax({
+                    type: 'Post',
+                    url: '/profile/RemoveFriend',
+                    data: "theirId=" + TheirId,
+                    success: function(data, textstatus) {
+                        console.log('Friend Removed!');
+                        location.reload();
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="~/scripts/posts.js"></script>
+    <script src="~/Scripts/infiniteScroll.js"></script>
+    <script type="text/javascript">
+        var moreRowsUrl = '/Profile/getposts';
+        $(window).scroll(ulScrollHandler);
+
+
+        function nextPage(page) {
+            $.ajax({
+                type: 'Post',
+                url: '/profile/FriendsPage',
+                data: {
+                    page: page,
+                    userid: '@Model.UserId'
+                },
+                success: function(data, textstatus) {
+                    console.log(data);
+                    $('#PartialFriends').empty();
+                    $('#PartialFriends').html(data);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+    </script>
+}

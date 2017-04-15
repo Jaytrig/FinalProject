@@ -1,0 +1,83 @@
+﻿
+@using System.ServiceModel
+@using Microsoft.AspNet.Identity
+
+@model List<SocialNetwork.Models.FriendsChatListItemModel>
+@section stylesheet{
+    <link href="~/Content/Chat.css" rel="stylesheet" />
+}
+
+@{
+    ViewBag.Title = "Chat";
+    SocialMediaDBQuerys _dbQuerys = new SocialMediaDBQuerys();
+
+    var myID = User.Identity.GetUserId();
+
+    var groupedByLetters = Model.GroupBy(s => s.Surname.Substring(0, 1), s => s, (key, g) => new { letter = key, friends = g.ToList() })
+                                     .OrderBy(s => s.letter);
+}
+
+<div class="chatContainer">
+    <div class="friendsList">
+        <div class="list-group">
+            @foreach (var letter in groupedByLetters)
+            {
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#@letter.letter" aria-expanded="true" aria-controls="collapseOne">
+                                <a href="#" class="list-group-item active">
+                                    @letter.letter
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="@letter.letter" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="@letter.letter">
+                            <div class="panel-body">
+                                @foreach (var friends in letter.friends)
+                                {
+                                    int unread = _dbQuerys.UnreadMessageCount(friends.UserId, myID);
+
+                                    <div class="friendIDs" onclick="showMessage('@friends.UserId')">
+                                        <a href="#" class="list-group-item">
+                                            @friends.Name
+
+
+                                            <div class="onlineState" id="@friends.UserId">
+                                                @if (unread > 0)
+                                                {
+                                                    @unread
+                                                }
+                                            </div>
+                                        </a>
+                                        <input type="hidden" value="@friends.UserId" />
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+
+
+        </div>
+    </div>
+
+    <div class="openChat">
+        <div id="ChatMessagesContainer" class="chatArea">
+
+        </div>
+        <div class="chatInput">
+            <textarea id="messageContents" name="messageContents" placeholder="Enter Message..." class="messageTextarea"></textarea>
+            <input type="button" class="btn messageBtn btn-primary" value="Send!" id="sendBTN" />
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+<script src="~/Scripts/LiveChat.js"></script>
+    <script src="~/Scripts/chatPage.js"></script>
+}

@@ -1,0 +1,63 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.title = "Search";
+}
+<input type="text" class="form-control" placeholder="search name.. Type 3 letter or more" id="search" aria-describedby="sizing-addon1">
+<div id="results">
+    
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $('#search').keyup(function() {
+            var input = $('#search').val();
+            if (input.length > 2) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/profile/SearchUsers',
+                    data: { name: input },
+                    success: function(data) {
+                        $("div#results").html(data);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            } else {
+                $("div#results").html('');
+            }
+        });
+
+        function addFriend(theirId) {
+            $.ajax({
+                type: 'Post',
+                url: '/profile/AddFriend',
+                data: "theirId=" + theirId + "&yourId=" + '@User.Identity.GetUserId()',
+                success: function(data, textstatus) {
+                    console.log('Request Sent!');
+                    location.reload();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        };
+
+
+        function deleteFriend(theirId) {
+
+            $.ajax({
+                type: 'Post',
+                url: '/profile/RemoveFriend',
+                data: "theirId=" + TheirId + "&yourId=" + '@User.Identity.GetUserId()',
+                success: function(data, textstatus) {
+                    console.log('Friend Removed!');
+                    location.reload();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+    </script>
+
+}

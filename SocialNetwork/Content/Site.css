@@ -1,0 +1,32 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:15px !important; 
+    padding-bottom:0 !important;
+    height: 40px;
+}
+.navbar {min-height:50px !important;}
+
+
+
+@media(max-width: 767px) {
+    .notification-Text {
+        color: white;
+    }
+}

@@ -1,0 +1,139 @@
+﻿
+.delete-post-btn {
+    border: none;
+    background: transparent;
+    color: red;
+}
+.panel.panel-default.big-post {
+    padding-left: 200px;
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.panel-footer {
+    padding-top: 0;
+    padding-right: 3px;
+    text-align: right;
+    position: relative;
+}
+
+.panel-img {
+    overflow: hidden;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.Link-to-profile {
+}
+
+.date-0 {
+    right: 10px;
+    position: absolute;
+}
+
+.panel-body {
+    height: 65%;
+    padding-top: 5px;
+}
+
+.post-title {
+    position: absolute;
+    left: 50%;
+}
+
+.postRep {
+    position: absolute;
+    left: 20px;
+}
+
+.rating {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.rating-spans {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.Plus, .Minus {
+    cursor: pointer;
+}
+
+.like {
+    color: green;
+}
+
+.dislike {
+    color: orangered;
+}
+
+
+
+.Small-post {
+    display: none;
+    font-size: 0.9em;
+}
+
+    .Small-post > .panel-heading {
+        padding-left: 55px;
+    }
+
+        .Small-post > .panel-heading > .panel-title {
+            height: 30px;
+        }
+
+            .Small-post > .panel-heading > .panel-title > .panel-img > img {
+                height: 50px;
+                width: 50px;
+            }
+
+            .Small-post > .panel-heading > .panel-title > .panel-img {
+                height: 50px;
+                width: 50px;
+            }
+
+            .Small-post > .panel-heading > .panel-title > .text-info {
+                height: 30px;
+                font-size: 0.9em;
+                text-align: center;
+                padding-top: 5px;
+            }
+
+                .Small-post > .panel-heading > .panel-title > .text-info > .date-0 {
+                    text-transform: none;
+                }
+
+                .Small-post > .panel-heading > .panel-title > .text-info > .Link-to-profile {
+                    left: 55px;
+                    position: absolute;
+                }
+
+.postRep-small {
+    padding-left: 75px;
+    width: 75px;
+    display: inline;
+}
+
+
+.panel.panel-default.Small-post {
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+@media (max-width: 767px) {
+    .big-post {
+        display: none;
+    }
+
+    .Small-post {
+        display: block;
+    }
+}

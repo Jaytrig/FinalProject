@@ -1,0 +1,184 @@
+﻿.info-section {
+    height: 50vh;
+    position: relative;
+    margin-top: 20px;
+}
+
+.info-section-private {
+    height: 50vh;
+    position: relative;
+    margin-top: 25vh;
+}
+
+.top-with-background {
+    height: 40%;
+    border: .5px solid #a8aaad;
+    overflow: hidden;
+    border-bottom: none;
+}
+
+
+.profile-img {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    top: calc(40% - 100px);
+    left: calc(50% - 100px);
+    overflow: hidden;
+    z-index: 1029;
+    border: 1px solid #a8aaad;
+}
+
+.information {
+    height: 60%;
+    border: 1px solid #a8aaad;
+    position: relative;
+    -ms-border-bottom-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    -ms-border-bottom-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top: none;
+}
+
+.name {
+    width: 300px;
+    position: absolute;
+    text-align: center;
+    left: calc(50% - 150px);
+    top: 40%;
+}
+
+.button-section {
+    margin-top: 20px;
+}
+
+.about-info {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.posts {
+    margin-top: 20px;
+}
+
+.friends-title {
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.friends-footer {
+    width: 100%;
+    height: 40px;
+    border-top: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.friends-list-contents {
+    height: calc(100% - 84px);
+    margin-top: 2px;
+}
+
+.user-info-scroll {
+    opacity: 0;
+    position: fixed;
+    top: 90px;
+    left: 2%;
+    width: 17%;
+}
+
+#PartialFriends {
+}
+
+.FriendItem {
+    position: relative;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+div.FriendItem:last-child {
+    border-bottom: none;
+}
+
+
+.FriendItem-name {
+}
+
+.FriendItem-image {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    top: 10px;
+}
+
+.user-info-scroll-img {
+    width: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    padding-left: 0;
+}
+
+
+.tabs {
+    margin-top: 10px;
+}
+
+
+
+@media(max-width: 767px) {
+
+    .info-section {
+        height: 40vh;
+        border: none;
+    }
+
+        .info-section > .profile-img, .info-section > .profile-img > img {
+            height: 80px;
+            width: 80px;
+        }
+
+    .about-info {
+        position: absolute;
+        top: 35px;
+        left: 20px;
+    }
+
+    .name {
+        top: 60%;
+    }
+
+    .button-section {
+        margin-top: 10px;
+    }
+
+    .info-section > .profile-img {
+        border-radius: 50%;
+        top: calc(40% - 40px);
+        left: calc(50% - 40px);
+        overflow: hidden;
+        z-index: 1029;
+        border: 1px solid;
+    }
+
+    .info-section > .information > .about-info > h3, h2 {
+        font-size: 0.8em;
+        margin-top: 10px;
+    }
+}

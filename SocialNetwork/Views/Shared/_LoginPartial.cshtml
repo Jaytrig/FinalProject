@@ -1,0 +1,48 @@
+﻿@using CloudinaryDotNet
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    CreateCloudinary c = new CreateCloudinary();
+    SocialMediaDBQuerys dbQuerys = new SocialMediaDBQuerys();
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li>
+                @Html.ActionLink("News Feed", "Index", "Home", new { }, new { title = "News Feed" })
+            </li>
+            <li>
+                @Html.ActionLink("My Profile", "Index", "Profile", new {slug = User.Identity.GetSlug()}, new {title = "Profile"})
+            </li>
+            <li>
+                @Html.ActionLink("Chat", "index", "Chat", new {}, new {title = "Chat"})
+            </li>
+            <li>
+                @Html.ActionLink("Search", "SearchForUsers", "Profile", new {}, new {title = "Search"})
+            </li>
+            <li class="dropdown">
+                @Html.Partial("_NotifcationList")
+            </li>
+            <li>@Html.ActionLink("Manage Account", "Index", "Manage")</li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdXzK8u7LIktjZBQH9ZKOyvxP4zkK6k4v4omo1MAtkdVxT9GA/viewform" target="_blank">Survey</a>
+            </li>
+
+
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink"})</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+
+@section Scripts{
+
+}

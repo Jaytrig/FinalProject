@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "News Feed";
+}
+
+@using Microsoft.AspNet.Identity
+@using SocialNetwork.Database
+@model SocialNetwork.Database.Post[]
+
+
+<div class="jumbotron">
+    <h1 align="center">News Feed</h1>
+</div>
+
+@Html.Partial("../Profile/_inputPost")
+
+@*@Html.Partial("../Profile/_Posts", Model)*@
+
+<div class="posts">
+    @{
+        if (ViewBag.Posts != null)
+        {
+            <div class="col-xs-12 infinite-scroll">
+                @Html.Partial("../Profile/_Posts", (ViewBag.Posts as Post[]))
+            </div>
+        }
+    }
+</div>
+<div id="loading" class="col-xs-12 text-center" style="display: none;">Loading...</div>
+
+<div class="modal fade bs-example-modal-sm in" id="delete-Post-Model" role="dialog" tabindex="-1" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="mySmallModalLabel">Delete Post?</h4>
+                <input type="hidden" id="postToDelete" value="" />
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this post, this can not be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="DeletePostModelBtn" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script src="~/Scripts/infiniteScroll.js"></script>
+    <script src="~/Scripts/posts.js"></script>
+    <script type="text/javascript">
+        var moreRowsUrl = '/Home/getposts';
+        $(window).scroll(ulScrollHandler);
+
+
+        function nextPage(page) {
+            $.ajax({
+                type: 'Post',
+                url: '/profile/FriendsPage',
+                data: {
+                    page: page
+                },
+                success: function (data, textstatus) {
+                    console.log(data);
+                    $('#PartialFriends').empty();
+                    $('#PartialFriends').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "PrivateProfile";
+}
+@using System.Web.Mvc.Html
+@model int?
+
+
+<h2>PrivateProfile</h2>
+
+@using (Html.BeginForm("PrivateProfile", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+
+        <div class="col-xs-12">
+            <label for="privateProfile">Do you want your profile to be private so only friends can view it?</label>
+            @Html.CheckBox("privateProfile", Model)
+        </div>
+        <input type="submit" id="save" style="margin-top: 10px;" class="btn btn-success col-xs-12" value="Save" />
+    </div>
+}

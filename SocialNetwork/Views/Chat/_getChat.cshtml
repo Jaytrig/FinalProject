@@ -1,0 +1,37 @@
+﻿@using CloudinaryDotNet
+@using Microsoft.AspNet.Identity
+@model SocialNetwork.Models.ChatViewMessageModel
+@{
+    SocialMediaDBQuerys _dbQuerys = new SocialMediaDBQuerys();
+
+    var thisUser = _dbQuerys.GetFirstName(Model.userID);
+
+    var c = new CreateCloudinary();
+}
+
+<div class="chatHeader">
+    <div class="profile-img-chat">
+        @c.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(50).Width(50).Crop("scale")).BuildImageTag(thisUser.DisplayPicture)
+    </div>
+    <span class="chat-Name">@thisUser.Name @thisUser.Surname</span>
+    
+</div>
+
+<div id="Chat-@Model.userID" class="messageList">
+    <input type="hidden" id="openChatUserId" value="@Model.userID" />
+    @foreach (var message in Model.messages)
+    {
+        string thisClass = message.FromID == User.Identity.GetUserId() ? "My-Bubble" : "Their-Bubble";
+        var name = message.FromID == User.Identity.GetUserId() ? "Me" : thisUser.Name;
+
+        <div class="@thisClass">
+
+            <span class="nameSpan row">@name</span>
+            <span class="messageSpan row">@message.Message1</span>
+            <span class="timeSpan row">@if (message.Time != null)
+                                       {
+                                           @message.Time.Value.ToString("ddd dd MMM yyyy HH:mm:ss")
+                                       }</span>
+        </div>
+    }
+</div>

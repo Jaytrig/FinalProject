@@ -1,0 +1,76 @@
+﻿@using CloudinaryDotNet
+@using Microsoft.AspNet.Identity
+@using SocialNetwork.Database
+@using CloudinaryDotNet.Actions;
+
+@model User
+
+@{
+
+    SocialMediaDBQuerys _dbQuerys = new SocialMediaDBQuerys();
+    
+    var theirID = @Model.UserId;
+    var yourID = User.Identity.GetUserId();
+    var c = new CreateCloudinary();
+
+    var friendStatus = _dbQuerys.FriendStatus(theirID, yourID);
+}
+
+
+<div class="info-section-private">
+    <div class="top-with-background">
+        
+    </div>
+    <div class="profile-img">
+        @c.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(200).Width(200).Crop("scale")).BuildImageTag(Model.DisplayPicture)
+    </div>
+    <div class="information">
+        <div class="about-info">
+            <h3>Private User</h3>
+        </div>
+        <div class="name">
+            <h3>@Model.Forename</h3>
+            <h3>@Model.Surname</h3>
+            <div class="button-section">
+                @{
+                    if (friendStatus == 1) //1 = pending friend request
+                    {
+                        if (_dbQuerys.WhoSentFriendrequest(yourID, theirID).Equals(yourID))
+                        {
+                            <h4>Pending Friend you sent</h4>
+                        }
+                        else
+                        {
+                            <h4>Pending Friend they sent</h4>
+                        }
+                    }
+                    else //0 = no record in DB
+                    {
+                        <button class="btn btn-success" id="AddAsFriend">Add As Friend</button>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var TheirId = '@theirID';
+        var YourId = '@yourID';
+
+        $('#AddAsFriend').click(function() {
+            $.ajax({
+                type: 'Post',
+                url: '/profile/AddFriend',
+                data: "theirId=" + TheirId + "&yourId=" + YourId,
+                success: function(data, textstatus) {
+                    console.log('Request Sent!');
+                    location.reload();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        });
+    </script>
+    }

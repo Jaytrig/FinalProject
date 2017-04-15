@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="07c0795e76114c55aea77203278bf058" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="SocialMediaModel.C__MigrationHistory" Width="1.5" PointX="8.125" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.Friend" Width="1.5" PointX="6.875" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.FriendsStatu" Width="1.5" PointX="5.375" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.Message" Width="1.5" PointX="5.375" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.MessageType" Width="1.5" PointX="3.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.Picture" Width="1.5" PointX="7.125" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.PostComment" Width="1.5" PointX="2.625" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.PostRep" Width="1.5" PointX="0.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.Post" Width="1.5" PointX="5" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.Role" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.UserClaim" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.UserLogin" Width="1.5" PointX="2.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.UserRole" Width="1.5" PointX="4.625" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialMediaModel.User" Width="1.5" PointX="0.625" PointY="2.625" IsExpanded="true" />
+        <AssociationConnector Association="SocialMediaModel.Friends_fk2" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialMediaModel.Messages_fk2" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialMediaModel.Pictures_fk0" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialMediaModel.PostComments_fk0" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialMediaModel.PostRep_fk0" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialMediaModel.FK_JamieUni_UserRoles_JamieUni_Roles_RoleId" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialMediaModel.FK_JamieUni_UserClaims_JamieUni_Users_IdentityUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialMediaModel.FK_JamieUni_UserLogins_JamieUni_Users_IdentityUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialMediaModel.FK_JamieUni_UserRoles_JamieUni_Users_IdentityUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialMediaModel.Friends_fk0" />
+        <AssociationConnector Association="SocialMediaModel.Messages_fk0" />
+        <AssociationConnector Association="SocialMediaModel.Posts_fk0" />
+        <AssociationConnector Association="SocialMediaModel.Friends_fk1" />
+        <AssociationConnector Association="SocialMediaModel.PostRep_fk01" />
+        <AssociationConnector Association="SocialMediaModel.PostComments_fk01" />
+        <AssociationConnector Association="SocialMediaModel.FK_PostRep_PostRep" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

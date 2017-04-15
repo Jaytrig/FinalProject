@@ -1,0 +1,21 @@
+﻿#search {
+    margin-top: 20px;    
+
+}
+
+.search-list {
+    margin-top: 20px;
+}
+
+.search-item {
+    height: 120px;
+}
+
+.display-search {
+    position: absolute;
+}
+
+.search-content {
+    position: absolute;
+    left: 200px;
+}

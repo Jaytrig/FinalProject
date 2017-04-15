@@ -1,0 +1,32 @@
+﻿
+.inputMessage{
+    width: 100%;
+    resize: none;
+    margin-top: 5px;
+    padding-bottom: 24px;
+}
+
+.title-input {
+    width: 100%;
+}
+
+.submit-post {
+    margin-top: 5px;
+    width: 200px;
+    height: 40px;
+}
+
+.post-form {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.countdown {
+    position: absolute;
+    bottom: 50px;
+    right: 5px;
+}
+
+.input-form {
+    position: relative;
+}

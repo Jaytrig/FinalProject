@@ -1,0 +1,147 @@
+﻿@using CloudinaryDotNet
+@using Microsoft.AspNet.Identity
+@model SocialNetwork.Database.Post[]
+@{
+    Random random = new Random();
+    var c = new CreateCloudinary();
+
+    var dbContext = new SocialMediaDBQuerys();
+
+}
+
+
+
+@foreach (var post in Model)
+{
+    string[] date = FormatDate(post.PostedTime);
+    var firstOrDefault = dbContext.DbContext.Users.FirstOrDefault(x => x.UserId == post.UserId);
+    string slug = "";
+
+    string myPostSettings = "";
+
+    if (firstOrDefault != null)
+    {
+        slug = firstOrDefault.Slug;
+    }
+
+
+    if (post.UserId == User.Identity.GetUserId())
+    {
+        myPostSettings = "<button class='delete-post-btn fa fa-trash fa-2x' type='button' onclick='deletePost(" + post.ID + ")'></button>";
+    }
+
+    var img = c.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(200).Quality(100).Width(200).Crop("scale")).BuildImageTag(post.User.DisplayPicture);
+    var link = Html.ActionLink(post.User.Forename + ' ' + post.User.Surname, "Index", "Profile", new { slug = slug }, new { @class = "Link-to-profile" });
+
+    <div class="panel panel-default big-post">
+        <div class="panel-img" @("onclick=GoToRoom('" + slug + "')")>
+            @img
+        </div>
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                @link
+                <span class="post-title">@post.Title</span>
+                <span class="date-0">@date[0]</span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            @post.Message
+        </div>
+        <div class="panel-footer">
+            <div class="postRep PostID-@post.ID">
+                @Html.Partial("../Profile/_postRep", post)
+            </div>
+
+            <h3 class="panel-title">
+                posted on @date[1] at @date[2] @Html.Raw(myPostSettings)
+            </h3>
+        </div>
+    </div>
+
+
+
+
+    <div class="panel panel-default Small-post">
+
+        <div class="panel-heading">
+            <div class="panel-title">
+                <div class="panel-img " @("onclick=GoToRoom('" + slug + "')")>
+                    @img
+                </div>
+                <div class="text-info">
+                    @link
+                    @*<span class="post-title">@post.Title</span>*@
+                    <div class="postRep-small PostID-@post.ID">
+                        @Html.Partial("../Profile/_postRep", post)
+                    </div>
+                    <span class="date-0">@date[3]  @Html.Raw(myPostSettings)</span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            @post.Message
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="clearfix"></div>
+}
+
+@if (Model.Length == 0)
+{
+    <h3 class="text-center">User has no posts....</h3>
+}
+
+
+
+@functions {
+
+    public string[] FormatDate(DateTime? inputDate)
+    {
+        DateTime? currentTime = DateTime.Now.AddHours(7);
+
+        var daysAgo = currentTime - inputDate;
+
+        string[] output = new string[4];
+
+
+        if (daysAgo.Value.Minutes == 0)
+        {
+            output[0] = daysAgo.Value.Seconds + " Seconds Ago";
+            output[1] = inputDate.Value.ToLongDateString();
+            output[2] = inputDate.Value.ToShortTimeString();
+            output[3] = daysAgo.Value.Seconds + "s";
+        }
+        else if (daysAgo.Value.Hours == 0)
+        {
+            output[0] = daysAgo.Value.Minutes + " Minutes Ago";
+            output[1] = inputDate.Value.ToLongDateString();
+            output[2] = inputDate.Value.ToShortTimeString();
+            output[3] = daysAgo.Value.Minutes + "m";
+        }
+        else if (daysAgo.Value.Days == 0)
+        {
+            output[0] = daysAgo.Value.Hours + " Hours Ago";
+            output[1] = inputDate.Value.ToLongDateString();
+            output[2] = inputDate.Value.ToShortTimeString();
+            output[3] = daysAgo.Value.Hours + "h";
+        }
+        else
+        {
+            output[0] = daysAgo.Value.Days + " Days Ago";
+            output[1] = inputDate.Value.ToLongDateString();
+            output[2] = inputDate.Value.ToShortTimeString();
+            output[3] = daysAgo.Value.Hours + "d";
+        }
+
+
+        return output;
+
+    }
+
+}

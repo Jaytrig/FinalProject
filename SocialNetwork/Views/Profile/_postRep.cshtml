@@ -1,0 +1,47 @@
+﻿@model SocialNetwork.Database.Post
+
+
+@using Microsoft.AspNet.Identity
+
+@{
+    int rep = Model.PostReps.Sum(x => x.Rep);
+
+    var _dbQuerys = new SocialMediaDBQuerys();
+
+    var like = _dbQuerys.MyRepForPost(Model.ID, User.Identity.GetUserId());
+
+
+    string likeClass = "";
+    string dislikeClass = "";
+    string ratingClass = "";
+
+
+    if (like != null && like.Rep == 1)
+    {
+        likeClass = "like";
+    }
+    else if (like != null && like.Rep == -1)
+    {
+        dislikeClass = "dislike";
+    }
+
+    if (rep > 0)
+    {
+        ratingClass = "like";
+    }
+    else if (rep < 0)
+    {
+        ratingClass = "dislike";
+    }
+
+}
+
+<span class="rating-spans Plus @likeClass" onclick="likePost('@Model.ID')">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+</span>
+<span class="rating-spans rating @ratingClass">
+    @rep
+</span>
+<span class="rating-spans Minus @dislikeClass" onclick="dislikePost('@Model.ID')">
+    <i class="fa fa-minus" aria-hidden="true"></i>
+</span>

@@ -1,0 +1,51 @@
+﻿@model SocialNetwork.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+
+<div class="form-group">
+    <h4>Change your account</h4>
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+        </dd>
+        <dt>Location:</dt>
+        <dd>
+            @if (Model.User.Location != "")
+            {
+                @(Model.User.Location) @:- 
+            }
+            else
+            {
+                @:No location set - 
+            }
+
+            @Html.ActionLink("Set Location", "Location")
+        </dd>
+        @*<dt>DOB:</dt>
+        <dd>
+            @Model.User.BrithDate.Value.ToString("yyyy MMMM dd") - @Html.ActionLink("Set Date of Birth", "ChangeDateOfBirth")
+        </dd>*@
+
+        <dt>Profile Picture:</dt>
+        <dd>
+            @Html.ActionLink("Set Profile Picture", "ProfilePicture")
+        </dd>
+
+        <dt>Privacy Settings:</dt>
+        <dd>
+            @(Model.User.Private == 1 ? " Currently Private" : "Currently Public") - @Html.ActionLink("Set Privacy Settings", "PrivateProfile") 
+        </dd>
+    </dl>
+</div>

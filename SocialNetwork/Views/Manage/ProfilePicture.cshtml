@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "ProfilePicture";
+}
+
+<h2>ProfilePicture</h2>
+@model HttpPostedFileBase
+
+
+
+@using (Html.BeginForm("ProfilePicture", "Manage", FormMethod.Post, new {@class = "form-horizontal", role = "form", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m, new {@class = "col-md-2 control-label"})
+        <div class="col-xs-12">
+            <input class="form-control" type="file" name="displayPicture" accept="image/*"/>
+        </div>
+        <input type="submit" id="save" style="margin-top: 10px;"class="btn btn-success col-xs-12" value="Save" />
+    </div>
+}
